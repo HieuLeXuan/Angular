@@ -1,0 +1,31 @@
+<div class="container">
+    <p>Select multiple elements using custom templates with checkboxes</p>
+
+    <ng-select
+        [style.width.px]="300"
+        [items]="people"
+        [multiple]="true"
+        bindLabel="name"
+        [selectableGroup]="true"
+        [closeOnSelect]="false"
+        bindValue="id"
+        placeholder="Select items"
+        [(ngModel)]="selectedPeople">
+        <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+            <div class="ng-value" *ngFor="let item of items | slice:0:1">
+                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                <span class="ng-value-label">{{item.name}}</span>
+            </div>
+            <div class="ng-value" *ngIf="items.length > 1">
+                <span class="ng-value-label">{{items.length - 1}} more...</span>
+            </div>
+        </ng-template>
+        <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+            <input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/> {{item.name}}
+        </ng-template>
+    </ng-select>
+
+    <br>
+    <small>{{selectedPeople | json}}</small>    
+</div>
+

@@ -1,0 +1,67 @@
+<h3>ComponentToView</h3>
+<h3>Name: {{ user.name }}</h3>
+<p>Age: {{ user.age }}</p>
+<p>Married: {{ user.isMarried }}</p>
+<p>Married: {{ user.isMarried ? 'Married' : 'Alone' }}</p>
+<h2>Name: {{ showInfo() }}</h2>
+<img src="{{ img_link }}" alt="" width="200px"><br>
+<a href="{{ link }}">{{ text_link }}</a>
+
+<hr/>
+
+<h3>Property Binding</h3>
+<img bind-src="img_link" [alt]="'hot girl'" [width]="img_width"><br>
+<input type="text" class="form-control" [value]="user.name">
+<button 
+    type="button" 
+    class="btn btn-primary"
+    [disabled]="!isValid"
+>Sign In</button>
+
+<hr/>
+
+<h3>Attribute Binding</h3>
+<table [attr.border]="!tbBorder" [attr.width]="tbWidth">
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Phone</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>peter</td>
+        <td>0966055919</td>
+    </tr>
+</table>
+
+<hr/>
+
+<h3>Class Binding</h3>
+<table [class.table-bordered]="!isBorder">
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+        <td>Phone</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>peter</td>
+        <td>0966055919</td>
+    </tr>
+</table>
+<span class="label"
+        [class.label-danger]="isChecked === 0"
+        [class.label-success]="isChecked !== 0"
+>Label</span>
+
+<hr/>
+
+<div 
+    [style.background-color]="isSpecial ? 'red' : 'cyan'"
+    [style.color]="'white'"
+    >Hello Angular
+</div>
+
+
+
+

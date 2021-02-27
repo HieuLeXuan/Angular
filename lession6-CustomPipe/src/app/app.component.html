@@ -1,0 +1,54 @@
+<!-- <div class="container" [style.margin-top.px]="30">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="idFilter">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="nameFilter">
+            </td>
+            <td>
+              <input type="text" class="form-control" [(ngModel)]="statusFilter">
+            </td>
+          </tr>
+          <tr *ngFor="let product of products | filter : idFilter : nameFilter: statusFilter">
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.status ? 'Active' : 'Inactive' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Input</th>
+                        <th>Output</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ arrNumber }}</td>
+                        <td>{{ arrNumber | sortNumber: -1 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

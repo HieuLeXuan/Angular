@@ -1,0 +1,17 @@
+Data from parents component: {{ fullName }}  - {{ phone }}
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.phone }}</td>
+        </tr>
+    </tbody>
+</table>

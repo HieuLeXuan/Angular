@@ -1,0 +1,21 @@
+<div class="container" [style.margin.px]="30">
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      Data from child component: {{ txtFullName }}  - {{ txtPhone }}
+      <app-child
+        married="{{ isMarried }}"
+        age="{{ age }}"
+        [title]="'i love you too'"
+        (txtFullName)="onHandleFullName($event)"
+        (txtPhone)="onHandlePhone($event)"
+      ></app-child>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <app-user-list
+        [users]="users"
+        [fullName]="txtFullName"
+        [phone]="txtPhone"
+      ></app-user-list>
+    </div>
+  </div>
+</div>
