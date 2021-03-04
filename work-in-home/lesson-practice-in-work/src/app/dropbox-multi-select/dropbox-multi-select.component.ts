@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { DataService, Person } from '../data.service';
 import { map } from 'rxjs/operators';
 
@@ -7,21 +7,25 @@ import { map } from 'rxjs/operators';
   templateUrl: './dropbox-multi-select.component.html',
   styleUrls: ['./dropbox-multi-select.component.scss']
 })
-export class DropboxMultiSelectComponent implements OnInit {
+export class DropboxMultiSelectComponent implements OnInit, OnChanges {
 
-    people: Person[] = [];
-    selectedPeople = [];
+  people: Person[] = [];
+  selectedPeople = [];
 
-    constructor(private dataService: DataService) {
-    }
+  constructor(private dataService: DataService) {
+  }
 
-    ngOnInit() {
-      this.dataService.getPeople()
-          .pipe(map(x => x.filter(y => !y.disabled)))
-          .subscribe((res) => {
-              this.people = res;
-              this.selectedPeople = [];
-          });   
+  ngOnChanges(): void {
+    
+  }
+
+  ngOnInit() {
+    this.dataService.getPeople()
+        .pipe(map(x => x.filter(y => !y.disabled)))
+        .subscribe((res) => {
+            this.people = res;
+            this.selectedPeople = [];
+        });          
   }
 
 }
