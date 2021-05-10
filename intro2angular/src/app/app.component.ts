@@ -12,8 +12,9 @@ export class AppComponent implements OnInit, OnDestroy {
   showMenu = false;
   darkModeActive!: boolean;
 
-  userEmail = '';
+  userEmail!: null | string;
 
+  loggedIn = this.fb.isAuth();
   sub1: any;
 
   constructor(
@@ -26,6 +27,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.sub1 = this.ui.darkModeState.subscribe((value) => {
       this.darkModeActive = value;
     });
+
+    this.fb.auth.authState.subscribe((auth__state) => {
+      if (auth__state) {
+        console.log(`Email login: ${auth__state.email}`);
+        this.userEmail = auth__state.email;
+      }
+    });
   }
 
   toggleMenu() {
@@ -37,6 +45,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.sub1.unsubscribe();
+  }
 
+  logout() {
+    this.toggleMenu();
+    this.router.navigateByUrl('/login');
+    this.fb.auth.signOut();
   }
 }
