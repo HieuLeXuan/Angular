@@ -1,0 +1,31 @@
+<div class="min-h-screen bg-gray-50 flex flex-col justify-center">
+    <div class="max-w-md w-full mx-auto">
+        <div class="text-center font-medium text-xl">something</div>
+        <div class="text-3xl font-bold text-gray-900 mt-2 text-center">another text</div>
+    </div>
+    <div class="max-w-md w-full mx-auto bg-white mt-4 p-8 border-gray-300">
+        <form class="space-y-6" [formGroup]="signInForm" (submit)=submitLogin()>
+            <div>
+                <label for="email" class="text-sm font-bold text-gray-600 block">Email</label>
+                <input type="text" class="w-full p-2 border border-gray-300 rounded mt-1" formControlName="email">
+            </div>
+            <div>
+                <label for="password" class="text-sm font-bold text-gray-600 block">Password</label>
+                <input type="text" class="w-full p-2 border border-gray-300 rounded mt-1" formControlName="password">
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input type="checkbox" class="h-4 w-4 text-blue-300 rounded">
+                    <label for="" class="ml-2 text-sm text-gray-600">Remember me</label>
+                </div>
+                <div>
+                    <a href="" class="font-medium text-sm text-blue-500">Forgot Password</a>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="w-full py-2 px-4 bg-gray-600 hover:bg-gray-700 rounded-md text-white text-sm">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
