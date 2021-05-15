@@ -24,6 +24,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    window.scroll(0, 0);
+
     this.sub1 = this.ui.darkModeState.subscribe((value) => {
       this.darkModeActive = value;
     });
