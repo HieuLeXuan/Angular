@@ -27,12 +27,22 @@ export class FbService {
     return this.auth.authState.pipe(first());
   }
 
-  signin(email: string, pass: string) {
-    return this.auth.signInWithEmailAndPassword(email, pass);
+  // signin(email: string, pass: string) {
+  //   return this.auth.signInWithEmailAndPassword(email, pass);
+  // }
+
+  async login(email: string, password: string) {
+    var result = await this.auth.signInWithEmailAndPassword(email, password)
+    return result;
   }
 
-  signup(email: string, pass: string) {
-    return this.auth.createUserWithEmailAndPassword(email, pass);
+  // signup(email: string, pass: string) {
+  //   return this.auth.createUserWithEmailAndPassword(email, pass);
+  // }
+
+  async register(email: string, password: string) {
+    var result = await this.auth.createUserWithEmailAndPassword(email, password)
+    return result;
   }
 
   SetUserData(user: any) {

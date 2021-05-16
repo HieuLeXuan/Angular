@@ -22,10 +22,10 @@ export class LoginComponent implements OnInit {
   }
 
   async login(e: any) {
-    await this.fb.signin(e.target.email.value, e.target.password.value)
+    await this.fb.login(e.target.email.value, e.target.password.value)
       .then((result) => {
         this.fb.SetUserData(result.user);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('');
       })
       .catch((error) => {
         console.log(error);

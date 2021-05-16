@@ -21,6 +21,6 @@ export class SignupComponent implements OnInit {
   }
 
   async signup(e: any) {
-    await this.fb.signup(e.target.email.value, e.target.password.value);
+    await this.fb.register(e.target.email.value, e.target.password.value);
   }
 }

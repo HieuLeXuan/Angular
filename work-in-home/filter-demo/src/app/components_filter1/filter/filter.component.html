@@ -1,0 +1,10 @@
+<div style="margin: 100px; display: flex;">
+    <div style="margin-right: 10px" *ngIf="option">
+        <button>{{option}} {{valueRecive}}</button>
+        <button (click)="locaseOption()">close</button>
+    </div>
+    <button (click)="openFilter()">filter</button>
+</div>
+
+<app-filter-option *ngIf="isOpen" (optionFilter)="getOption($event)"></app-filter-option>
+<app-filter-option-child *ngIf="isOpenOptionChild" (isDisplay)="closeOptionChild($event)"></app-filter-option-child>
