@@ -8,6 +8,7 @@ import { Option } from '../class/option';
 })
 export class FilterParentsComponent implements OnInit {
   isOpenFilterOption = false;
+  isOpenFilterCondition = false;
   listOptions: Option[] = [];
 
   constructor() { }
@@ -28,7 +29,16 @@ export class FilterParentsComponent implements OnInit {
   }
 
   getDataOption(event: Option) {
+    this.isOpenFilterCondition = true;
     this.listOptions.push(event);
-    console.log(`option: ${JSON.stringify(this.listOptions)}`);
+    // console.log(`option: ${JSON.stringify(this.listOptions)}`);
+  }
+
+  deleteOption(id: string) {
+    const optionDelete = this.listOptions.find((element) => element.id == id);
+    let index = this.listOptions.indexOf(optionDelete as Option);
+    if (index > -1) {
+      this.listOptions.splice(index, 1);
+    }
   }
 }
