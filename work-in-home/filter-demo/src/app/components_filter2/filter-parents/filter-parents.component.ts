@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Option } from '../class/option';
+import { SendDataOrtherComponentService } from 'src/app/service/send-data-orther-component.service';
 
 @Component({
   selector: 'app-filter-parents',
@@ -11,10 +12,20 @@ export class FilterParentsComponent implements OnInit {
   isOpenFilterCondition = false;
   listOptions: Option[] = [];
 
-  constructor() { }
+  concatenationValue: string = '';
+  aditionValue: string = '';
+
+  constructor(
+    private sendDataOrtherComponent: SendDataOrtherComponentService,
+  ) { }
 
   ngOnInit(): void {
     // console.log(`option: ${JSON.stringify(this.listOptions)}`);
+    this.sendDataOrtherComponent.reciveData().subscribe((data) => {
+      this.aditionValue = data;
+    });
+
+    this.listOptions = JSON.parse(localStorage.getItem('listOptions') || '{}');
   }
 
   openFilterOption() {
@@ -32,6 +43,7 @@ export class FilterParentsComponent implements OnInit {
     this.isOpenFilterCondition = true;
     this.listOptions.push(event);
     // console.log(`option: ${JSON.stringify(this.listOptions)}`);
+    localStorage.setItem('listOptions', JSON.stringify(this.listOptions));
   }
 
   deleteOption(id: string) {
@@ -39,6 +51,18 @@ export class FilterParentsComponent implements OnInit {
     let index = this.listOptions.indexOf(optionDelete as Option);
     if (index > -1) {
       this.listOptions.splice(index, 1);
+    }
+    localStorage.setItem('listOptions', JSON.stringify(this.listOptions));
+  }
+
+  getAdition(event: string) {
+    console.log(`Condition: ${event}`);
+    this.concatenationValue = event;
+  }
+
+  closePopupAdition(event: boolean) {
+    if (event == true) {
+      this.isOpenFilterCondition = false;
     }
   }
 }

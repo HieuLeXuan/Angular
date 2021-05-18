@@ -3,7 +3,7 @@
         <div *ngFor="let option of listOptions" class="pl-5 flex">
             <span class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
                 <img class="fill-current w-4 h-4 mr-2" [src]="option.icon" alt="">
-                <span>{{option.name}}</span>
+                <span>{{option.name}} {{concatenationValue}} {{aditionValue}}</span>
             </span>
             <span class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded cursor-pointer" (click)="deleteOption(option.id)">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mt-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -22,4 +22,4 @@
     </div>
 </div>
 <app-filter-options *ngIf="isOpenFilterOption" (isOpenFilterOption)="getValuable($event)" (sendDataOption)="getDataOption($event)"></app-filter-options>
-<app-filter-condition *ngIf="isOpenFilterCondition"></app-filter-condition>
+<app-filter-condition *ngIf="isOpenFilterCondition" (isDisplayInputAdition)="getAdition($event)" (closePopupAdition)="closePopupAdition($event)"></app-filter-condition>
