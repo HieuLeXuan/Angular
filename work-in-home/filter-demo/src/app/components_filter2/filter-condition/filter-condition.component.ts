@@ -11,6 +11,8 @@ export class FilterConditionComponent implements OnInit {
   @Output() isDisplayInputAdition = new EventEmitter();
   @Output() closePopupAdition = new EventEmitter();
 
+  idConcatenation: number = 1;
+
   concatenations = [
     {
       id: 1,
@@ -36,6 +38,8 @@ export class FilterConditionComponent implements OnInit {
   displayInputAdition(id: number) {
     const concatenation = this.concatenations.find((element) => element.id == id)
     this.isDisplayInputAdition.emit(concatenation?.linking_verb);
+
+    this.idConcatenation = id;
   }
 
   sendAdition(aditionValue: string) {
