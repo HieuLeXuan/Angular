@@ -14,22 +14,22 @@ export class FilterOptionsComponent implements OnInit {
       id: 1,
       icon: '../../../assets/images/icon-filter/home.svg',
       name: 'Name',
-      selected: true,
-      conditionValue: ''
+      conditionValue: '',
+      concatenationValue: ''
     },
     {
       id: 2,
       icon: '../../../assets/images/icon-filter/home.svg',
       name: 'Country',
-      selected: false,
-      conditionValue: ''
+      conditionValue: '',
+      concatenationValue: ''
     },
     {
       id: 3,
       icon: '../../../assets/images/icon-filter/home.svg',
       name: 'City',
-      selected: false,
-      conditionValue: ''
+      conditionValue: '',
+      concatenationValue: ''
     }
   ]
 
@@ -39,9 +39,7 @@ export class FilterOptionsComponent implements OnInit {
   }
 
   addOption(id: number) {
-    // console.log(`id: ${id}`);
     const option = this.options.find((element) => element.id == id);
-    // console.log(`option: ${JSON.stringify(option)}`);
     this.isOpenFilterOption.emit(true);
     this.sendDataOption.emit(option);
   }

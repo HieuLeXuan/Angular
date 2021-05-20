@@ -3,5 +3,6 @@ export class Option {
     icon!: string;
     name!: string;
     selected!: boolean;
+    concatenationValue!: string;
     conditionValue!: string;
 }

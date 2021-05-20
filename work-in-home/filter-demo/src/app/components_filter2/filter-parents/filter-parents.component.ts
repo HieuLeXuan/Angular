@@ -12,26 +12,27 @@ export class FilterParentsComponent implements OnInit {
   isOpenFilterCondition = false;
   listOptions: Option[] = [];
 
-  concatenationValue: string = 'is';
-  conditionValue: string = '';
-
-  isDisplayButtonDelete: boolean = false;
+  isDisplayButtonDelete = false;
+  isCurrentOption!: string;
+  // arrInputValue: string = '';
 
   constructor(
-    private sendDataOrtherComponent: SendDataOrtherComponentService,
-  ) { }
+    private sendDataOrtherService: SendDataOrtherComponentService
+  ) {}
 
   ngOnInit(): void {
-    // console.log(`option: ${JSON.stringify(this.listOptions)}`);
-    this.sendDataOrtherComponent.reciveData().subscribe((data) => {
-      this.conditionValue = data;
+    //filter
+    this.sendDataOrtherService.reciveData().subscribe((data) => {
+      if (data) {
+        let data_log = JSON.parse(data);
+        let optionCurrent = this.listOptions.find((element) => element.id == data_log.idOptionCurrent);
+        (optionCurrent as Option).conditionValue = data_log.conditionValue;
+      }
     });
-
-    this.listOptions = JSON.parse(localStorage.getItem('listOptions') || '{}');
   }
 
+  // filter
   openFilterOption() {
-    // console.log('filter option!!');
     this.isOpenFilterOption = !this.isOpenFilterOption;
   }
 
@@ -42,48 +43,47 @@ export class FilterParentsComponent implements OnInit {
   }
 
   getDataOption(event: any) {
-    this.concatenationValue = 'is';
-    this.conditionValue = '';
-
     this.isOpenFilterCondition = true;
+    event.concatenationValue = 'is';
     this.listOptions.push(event);
-    // console.log(`option: ${JSON.stringify(this.listOptions)}`);
-    // localStorage.setItem('listOptions', JSON.stringify(this.listOptions));
+
+    this.isCurrentOption = event.id;
   }
 
   deleteOption(id: string) {
-    console.log('delete option !!!');
-
     const optionDelete = this.listOptions.find((element) => element.id == id);
     let index = this.listOptions.indexOf(optionDelete as Option);
     if (index > -1) {
       this.listOptions.splice(index, 1);
     }
-    // localStorage.setItem('listOptions', JSON.stringify(this.listOptions));
     this.isOpenFilterCondition = false;
   }
 
-  getCondition(event: string) {
-    // console.log(`Condition: ${event}`);
-    this.concatenationValue = event;
+  getCondition(event: any) {
+    let optionCurrent = this.listOptions.find((element) => element.id == event.idOptionCurrent);
+    (optionCurrent as Option).concatenationValue = event.concatenationValue;
   }
 
-  closePopupAdition(event: boolean) {
+  closePopupCondition(event: boolean) {
     if (event == true) {
       this.isOpenFilterCondition = false;
     }
   }
 
-  openFilterCondition() {
+  openFilterCondition(id: string, concatenationValue: string, conditionValue: string) {
     this.isOpenFilterCondition = true;
+   
+    // console.log(`${id}, ${concatenationValue}, ${conditionValue}`);
+
+    // if (id && concatenationValue && conditionValue) {
+    //   this.arrInputValue = '';
+    //   const infoInput = {
+    //     id: id,
+    //     concatenationValue: concatenationValue,
+    //     conditionValue: conditionValue
+    //   }
+    //   this.arrInputValue = JSON.stringify(infoInput);
+    // }
   }
-
-  // mouseover() {
-  //   this.isDisplayButtonDelete = true;
-  // }
-
-  // mouseleave() {
-  //   this.isDisplayButtonDelete = false;
-  // }
 
 }

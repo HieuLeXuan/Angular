@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { element } from 'protractor';
 import { SendDataOrtherComponentService } from 'src/app/service/send-data-orther-component.service';
 
@@ -8,46 +8,60 @@ import { SendDataOrtherComponentService } from 'src/app/service/send-data-orther
   styleUrls: ['./filter-condition.component.scss']
 })
 export class FilterConditionComponent implements OnInit {
-  @Output() isDisplayInputAdition = new EventEmitter();
-  @Output() closePopupAdition = new EventEmitter();
+  @Output() isDisplayInputCondition = new EventEmitter();
+  @Output() closePopupCondition = new EventEmitter();
+  @Input() idOptionCurrent!: string;
+  // @Input() arrInputValue: string = '';
 
-  idConcatenation: number = 1;
+  idConcatenation: number = 1;  
 
+  valueInput:string = '';
+  
   concatenations = [
     {
       id: 1,
-      linking_verb: 'is'
+      concatenationValue: 'is'
     },
     {
       id: 2,
-      linking_verb: 'is not'
+      concatenationValue: 'is not'
     },
     {
       id: 3,
-      linking_verb: 'starts with'
+      concatenationValue: 'starts with'
     },
   ];
 
   constructor(
-    private sendDataOrtherComponent: SendDataOrtherComponentService,
+    private sendDataOrtherService: SendDataOrtherComponentService,
   ) { }
 
   ngOnInit(): void {
-  }
+    // console.log(`ArrayInputValue: ${this.arrInputValue as string}`);
+    // console.log(JSON.parse(this.arrInputValue as string));
+    // console.log(`ArrayInputValue: ${JSON.parse((JSON.stringify(this.arrInputValue[0]) as string))}`);
+  } 
 
-  displayInputAdition(id: number) {
-    const concatenation = this.concatenations.find((element) => element.id == id)
-    this.isDisplayInputAdition.emit(concatenation?.linking_verb);
-
+  displayInputCondition(id: number) {
+    const concatenation = this.concatenations.find((element) => element.id == id);
+    let concatenationOption = {
+      idOptionCurrent: this.idOptionCurrent,
+      concatenationValue: concatenation?.concatenationValue
+    }
+    this.isDisplayInputCondition.emit(concatenationOption);
     this.idConcatenation = id;
   }
 
-  sendAdition(aditionValue: string) {
-    this.sendDataOrtherComponent.sendData(aditionValue);
+  sendCondition(conditionValue: string) {
+    let conditionOption = {
+      idOptionCurrent: this.idOptionCurrent,
+      conditionValue: conditionValue
+    }
+    this.sendDataOrtherService.sendData(JSON.stringify(conditionOption));
   }
 
   closePopup() {
-    this.closePopupAdition.emit(true);
+    this.closePopupCondition.emit(true);
   }
 
 }
