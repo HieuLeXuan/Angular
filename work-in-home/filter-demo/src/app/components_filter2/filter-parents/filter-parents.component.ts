@@ -14,7 +14,7 @@ export class FilterParentsComponent implements OnInit {
 
   isDisplayButtonDelete = false;
   isCurrentOption!: string;
-  // arrInputValue: string = '';
+  arrInputValue: string = '';
 
   constructor(
     private sendDataOrtherService: SendDataOrtherComponentService
@@ -71,19 +71,25 @@ export class FilterParentsComponent implements OnInit {
   }
 
   openFilterCondition(id: string, concatenationValue: string, conditionValue: string) {
-    this.isOpenFilterCondition = true;
-   
+    if (this.isOpenFilterCondition == true) {
+      this.isOpenFilterCondition = false;
+      setTimeout(() => {
+        this.isOpenFilterCondition = true;
+      },1);      
+    } else {
+      this.isOpenFilterCondition = true;
+    }
     // console.log(`${id}, ${concatenationValue}, ${conditionValue}`);
 
-    // if (id && concatenationValue && conditionValue) {
-    //   this.arrInputValue = '';
-    //   const infoInput = {
-    //     id: id,
-    //     concatenationValue: concatenationValue,
-    //     conditionValue: conditionValue
-    //   }
-    //   this.arrInputValue = JSON.stringify(infoInput);
-    // }
+    if (id && concatenationValue && conditionValue) {
+      this.arrInputValue = '';
+      const infoInput = {
+        id: id,
+        concatenationValue: concatenationValue,
+        conditionValue: conditionValue
+      }
+      this.arrInputValue = JSON.stringify(infoInput);
+    }
   }
 
 }

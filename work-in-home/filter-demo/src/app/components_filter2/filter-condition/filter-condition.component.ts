@@ -11,10 +11,9 @@ export class FilterConditionComponent implements OnInit {
   @Output() isDisplayInputCondition = new EventEmitter();
   @Output() closePopupCondition = new EventEmitter();
   @Input() idOptionCurrent!: string;
-  // @Input() arrInputValue: string = '';
+  @Input() arrInputValue: string = '';
 
-  idConcatenation: number = 1;  
-
+  idConcatenation!: number;
   valueInput:string = '';
   
   concatenations = [
@@ -37,9 +36,18 @@ export class FilterConditionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // console.log(`ArrayInputValue: ${this.arrInputValue as string}`);
-    // console.log(JSON.parse(this.arrInputValue as string));
-    // console.log(`ArrayInputValue: ${JSON.parse((JSON.stringify(this.arrInputValue[0]) as string))}`);
+    this.valueInput = '';
+    if (this.arrInputValue) {
+      this.valueInput = JSON.parse(this.arrInputValue).conditionValue;
+      this.idOptionCurrent = JSON.parse(this.arrInputValue).id;
+
+      // const a = this.concatenations.find((element) => {
+      //   element.concatenationValue = JSON.parse(this.arrInputValue).concatenationValue;
+      // });
+      this.idConcatenation = 2;
+    } else {
+      this.idConcatenation = 1;
+    }
   } 
 
   displayInputCondition(id: number) {
