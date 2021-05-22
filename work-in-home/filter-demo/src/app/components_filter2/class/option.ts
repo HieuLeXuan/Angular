@@ -1,8 +1,8 @@
 export class Option {
-    id!: string;
-    icon!: string;
+    // id!: string;
     name!: string;
-    selected!: boolean;
+    // selected!: boolean;
     concatenationValue!: string;
     conditionValue!: string;
+    type!: string;
 }

@@ -1,11 +1,19 @@
-<div class="absolute z-10 bg-white border border-gray-200 rounded-md -space-y-px w-64 ml-40">
-  <label class="flex ounded-tl-md rounded-tr-md relative cursor-pointer md:pl-4 md:pr-4 md:grid md:grid-cols-1" *ngFor="let concatenation of concatenations">
-    <div class="flex items-center text-sm mt-2">
-      <input (click)="displayInputCondition(concatenation.id)" [checked]="concatenation.id == idConcatenation" type="radio" name="pricing_plan" value="Startup" class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" aria-labelledby="pricing-plans-0-label" aria-describedby="pricing-plans-0-description-0 pricing-plans-0-description-1">
-      <span id="pricing-plans-0-label" class="ml-3 font-medium text-gray-900">{{concatenation.concatenationValue}}</span>
-    </div>
-    <div class="mt-2 border border-black rounded" *ngIf="concatenation.id == idConcatenation">
-      <input type="text" class="w-full" value="{{valueInput}}" (keyup)="sendCondition(aditionValue.value)" #aditionValue (keyup.enter)="closePopup()"/>
-    </div>
-  </label>
+<div *ngIf="typeOption === 'string'">
+  <div class="absolute z-10 bg-white border border-gray-200 rounded-md -space-y-px w-64 mt-5">
+    <label class="flex ounded-tl-md rounded-tr-md relative cursor-pointer md:pl-4 md:pr-4 md:grid md:grid-cols-1"
+      *ngFor="let concatenation of concatenations">
+      <div class="flex items-center text-sm mt-2">
+        <input (click)="displayInputCondition(concatenation.id)" [checked]="concatenation.id == idConcatenation"
+          type="radio" name="pricing_plan" value="Startup"
+          class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" aria-labelledby="pricing-plans-0-label"
+          aria-describedby="pricing-plans-0-description-0 pricing-plans-0-description-1">
+        <span id="pricing-plans-0-label"
+          class="ml-3 font-medium text-gray-900">{{concatenation.concatenationValue}}</span>
+      </div>
+      <div class="mt-2 border border-black rounded" *ngIf="concatenation.id == idConcatenation">
+        <input type="text" class="w-full" value="{{conditionValue}}" (keyup)="sendAdition(aditionValue.value)" #aditionValue
+          (keyup.enter)="closePopup()" />
+      </div>
+    </label>
+  </div>
 </div>

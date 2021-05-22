@@ -12,24 +12,38 @@ export class FilterOptionsComponent implements OnInit {
   options = [
     {
       id: 1,
-      icon: '../../../assets/images/icon-filter/home.svg',
-      name: 'Name',
+      name: 'First Name',
+      concatenationValue: '',
       conditionValue: '',
-      concatenationValue: ''
+      type: 'string'
     },
     {
       id: 2,
-      icon: '../../../assets/images/icon-filter/home.svg',
-      name: 'Country',
+      name: 'Age',
+      concatenationValue: '',
       conditionValue: '',
-      concatenationValue: ''
+      type: 'number'
     },
     {
       id: 3,
-      icon: '../../../assets/images/icon-filter/home.svg',
-      name: 'City',
+      name: 'Date',
+      concatenationValue: '',
       conditionValue: '',
-      concatenationValue: ''
+      type: 'date'
+    },
+    {
+      id: 4,
+      name: 'Education',
+      concatenationValue: '',
+      conditionValue: '',
+      type: 'enum'
+    },
+    {
+      id: 5,
+      name: 'Hazadous duties',
+      concatenationValue: '',
+      conditionValue: '',
+      type: 'boolean'
     }
   ]
 
@@ -39,7 +53,7 @@ export class FilterOptionsComponent implements OnInit {
   }
 
   addOption(id: number) {
-    const option = this.options.find((element) => element.id == id);
+    const option = this.options.find((element) => element.id === id);
     this.isOpenFilterOption.emit(true);
     this.sendDataOption.emit(option);
   }

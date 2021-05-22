@@ -1,71 +1,89 @@
-<div class="flex pt-40 pl-40">
-  <div class="pb-5 flex cursor-pointer font-medium text-blue-400">
+<div class="flex p-40">
+  <div class="pb-5 flex cursor-pointer font-medium text-blue-400" *ngFor="let option of listOptions">
+    <div class="flex relative mr-2 break-normal break-all" (mouseenter)="isDisplayButtonDelete = true"
+      (mouseleave)="isDisplayButtonDelete = false">
+      <div>
+        <span class="h-6 bg-gray-300 hover:bg-gray-400 text-gray-500 pl-2 rounded inline-flex items-center"
+          (click)="openFilterCondition(option)">
+          <!-- <img class="fill-current w-4 h-4 mr-2" [src]="option.icon" alt=""> -->
+          <span class="relative max-w-xs truncate">{{option.name}} {{option.concatenationValue}}
+            {{option.conditionValue}}
+            <span class="bg-gray-300 hover:bg-gray-400 text-gray-800 rounded cursor-pointer absolute right-0 z-20"
+              (click)="deleteOption(option.conditionValue)" *ngIf="isDisplayButtonDelete == true">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 my-1 mx-1" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+          </span>
+        </span>
 
-      <!-- <div *ngIf="listOptions.length > 1">
-        <select>
-          <option>and</option>
-          <option>or</option>
-        </select>
-      </div> -->
-
-      <div *ngFor="let option of listOptions" class="flex relative mr-2" (mouseenter)="isDisplayButtonDelete = true" (mouseleave)="isDisplayButtonDelete = false">
-          <span class="bg-gray-300 hover:bg-gray-400 text-gray-500 px-2 rounded inline-flex items-center" (click)="openFilterCondition(option.id, option.concatenationValue, option.conditionValue)">
-            <img class="fill-current w-4 h-4 mr-2" [src]="option.icon" alt="">
-            <span>{{option.name}} {{option.concatenationValue}} {{option.conditionValue}}</span>
-          </span>
-          <span class="bg-gray-300 hover:bg-gray-400 text-gray-800 rounded cursor-pointer absolute right-0 z-10 mr-6" (click)="deleteOption(option.id)" *ngIf="isDisplayButtonDelete == true">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 my-1 mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
-          <span class="bg-gray-300 hover:bg-gray-400 text-gray-800 rounded cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 my-1 mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
-          </span>
+        <app-filter-condition *ngIf="isOpenFilterCondition && listOptions.indexOf(option) == indexCurrentOption"
+          (isDisplayInputCondition)="getConcatenationValue($event)" (closePopupCondition)="closePopupCondition($event)"
+          [optionCurrent]="currentOption" [arrInputValue]="arrInputValue">
+        </app-filter-condition>
       </div>
+      <span class="h-6 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 my-1 mx-1" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+      </span>
+    </div>
+
+    <div *ngIf="listOptions.indexOf(option) != listOptions.length - 1">
+      <select class="outline-none mx-1">
+        <option>and</option>
+        <option>or</option>
+      </select>
+    </div>
   </div>
 
-  <div class="pb-5 flex cursor-pointer font-medium text-blue-400" (click)="openFilterOption()">
-      <div class="flex pr-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+  <div class="flex font-medium text-blue-400" [ngClass]="{'cursor-default': isDisableAddFilter, 'cursor-pointer': !isDisableAddFilter}">
+    <div class="flex pr-4" (click)="openFilterMenu(isDisableAddFilter)">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" [ngClass]="{'text-gray-400': isDisableAddFilter}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+      </svg>
+      <span class="font-medium" [ngClass]="{'text-gray-400': isDisableAddFilter}">Add filter</span>
+    </div>
+
+    <div
+      class="absolute z-10 origin-top-right mt-11 w-28 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
+      role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" *ngIf="isOpenFilterMenu">
+      <div class="py-1" role="none">
+        <a class="text-gray-700 group flex items-center px-2 py-2 text-sm cursor-pointer" role="menuitem" tabindex="-1"
+          id="menu-item-0" (click)="openFilterOption()">
+          You
+          <svg xmlns="http://www.w3.org/2000/svg" class="ml-14 h-4 w-4" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
-          <span class="font-medium">Add filter</span>
+        </a>
       </div>
+      <div class="py-1" role="none">
+        <a class="text-gray-700 group flex items-center px-2 py-2 text-sm cursor-pointer" role="menuitem" tabindex="-1"
+          id="menu-item-0" (click)="openFilterOption()">
+          Partner
+          <svg xmlns="http://www.w3.org/2000/svg" class="ml-8 h-4 w-4" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+      <div class="py-1" role="none">
+        <a class="text-gray-700 group flex items-center px-2 py-2 text-sm cursor-pointer" role="menuitem" tabindex="-1"
+          id="menu-item-0" (click)="openFilterOption()">
+          Household
+          <svg xmlns="http://www.w3.org/2000/svg" class="ml-3 h-4 w-4" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <app-filter-options *ngIf="isOpenFilterOption" (isOpenFilterOption)="getValuable($event)"
+      (sendDataOption)="getDataOption($event)">
+    </app-filter-options>
   </div>
 </div>
-<app-filter-options *ngIf="isOpenFilterOption" (isOpenFilterOption)="getValuable($event)" (sendDataOption)="getDataOption($event)"></app-filter-options>
-<app-filter-condition *ngIf="isOpenFilterCondition" 
-                      (isDisplayInputCondition)="getCondition($event)" 
-                      (closePopupCondition)="closePopupCondition($event)" 
-                      [idOptionCurrent]="isCurrentOption"
-                      [arrInputValue]="arrInputValue">
-                      </app-filter-condition>
-
-<!-- <div class="origin-top-right mt-2 w-28 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-  <div class="py-1" role="none">
-    <a class="text-gray-700 group flex items-center px-4 py-2 text-sm cursor-pointer" role="menuitem" tabindex="-1" id="menu-item-0" (click)="openFilterOption()">
-      Edit
-      <svg xmlns="http://www.w3.org/2000/svg" class="ml-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
-    </a>
-  </div>
-  <div class="py-1" role="none">
-    <a class="text-gray-700 group flex items-center px-4 py-2 text-sm cursor-pointer" role="menuitem" tabindex="-1" id="menu-item-0">
-      Edit
-      <svg xmlns="http://www.w3.org/2000/svg" class="ml-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
-    </a>
-  </div>
-  <div class="py-1" role="none">
-    <a class="text-gray-700 group flex items-center px-4 py-2 text-sm cursor-pointer" role="menuitem" tabindex="-1" id="menu-item-0">
-      Edit
-      <svg xmlns="http://www.w3.org/2000/svg" class="ml-10 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
-    </a>
-  </div>
-</div> -->

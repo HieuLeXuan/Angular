@@ -8,30 +8,45 @@ import { SendDataOrtherComponentService } from 'src/app/service/send-data-orther
   styleUrls: ['./filter-parents.component.scss']
 })
 export class FilterParentsComponent implements OnInit {
+  //filter
+  isOpenFilterMenu = false;
   isOpenFilterOption = false;
   isOpenFilterCondition = false;
   listOptions: Option[] = [];
-
   isDisplayButtonDelete = false;
-  isCurrentOption!: string;
-  arrInputValue: string = '';
+  currentOption!: Option;
+  arrInputValue = '';
+  isDisableAddFilter = false;
+  indexCurrentOption!: number;
 
   constructor(
     private sendDataOrtherService: SendDataOrtherComponentService
   ) {}
 
   ngOnInit(): void {
-    //filter
+    // add conditionValue into last object
     this.sendDataOrtherService.reciveData().subscribe((data) => {
       if (data) {
-        let data_log = JSON.parse(data);
-        let optionCurrent = this.listOptions.find((element) => element.id == data_log.idOptionCurrent);
-        (optionCurrent as Option).conditionValue = data_log.conditionValue;
+        const dataTemp = JSON.parse(data);
+        const lastIndex = this.listOptions.findIndex(x => x.conditionValue === dataTemp.conditionValue);
+        this.listOptions[lastIndex].conditionValue = dataTemp.conditionValue;
+
+        if (this.listOptions[lastIndex].conditionValue === '') {
+          this.isDisableAddFilter = true;
+        } else {
+          this.isDisableAddFilter = false;
+        }
       }
     });
   }
 
   // filter
+  openFilterMenu(isDisableAddFilter: boolean) {
+    if (!isDisableAddFilter) {
+      this.isOpenFilterMenu = !this.isOpenFilterMenu;
+    }
+  }
+
   openFilterOption() {
     this.isOpenFilterOption = !this.isOpenFilterOption;
   }
@@ -42,53 +57,53 @@ export class FilterParentsComponent implements OnInit {
     }
   }
 
-  getDataOption(event: any) {
+  getDataOption(event: Option) {
+    this.isOpenFilterMenu = false;
     this.isOpenFilterCondition = true;
     event.concatenationValue = 'is';
     this.listOptions.push(event);
 
-    this.isCurrentOption = event.id;
+    this.currentOption = event;
+    this.openFilterCondition(event);
   }
 
-  deleteOption(id: string) {
-    const optionDelete = this.listOptions.find((element) => element.id == id);
-    let index = this.listOptions.indexOf(optionDelete as Option);
-    if (index > -1) {
-      this.listOptions.splice(index, 1);
-    }
+  deleteOption(conditionValue: string) {
+    this.isDisableAddFilter = false;
     this.isOpenFilterCondition = false;
+    const indexCurrentOption = this.listOptions.findIndex(x => x.conditionValue === conditionValue);
+
+    if (indexCurrentOption > -1) {
+      this.listOptions.splice(indexCurrentOption, 1);
+    }
   }
 
-  getCondition(event: any) {
-    let optionCurrent = this.listOptions.find((element) => element.id == event.idOptionCurrent);
+  getConcatenationValue(event: Option) {
+    const optionCurrent = this.listOptions.find((element) => element.conditionValue === event.conditionValue);
     (optionCurrent as Option).concatenationValue = event.concatenationValue;
   }
 
   closePopupCondition(event: boolean) {
-    if (event == true) {
+    if (event === true) {
       this.isOpenFilterCondition = false;
     }
   }
 
-  openFilterCondition(id: string, concatenationValue: string, conditionValue: string) {
-    if (this.isOpenFilterCondition == true) {
+  openFilterCondition(option: Option) {
+    this.arrInputValue = '';
+    this.indexCurrentOption = this.listOptions.findIndex(x => x.conditionValue === option.conditionValue);
+
+    if (this.isOpenFilterCondition === true) {
       this.isOpenFilterCondition = false;
       setTimeout(() => {
         this.isOpenFilterCondition = true;
-      },1);      
+      }, 1);
     } else {
       this.isOpenFilterCondition = true;
     }
-    // console.log(`${id}, ${concatenationValue}, ${conditionValue}`);
 
-    if (id && concatenationValue && conditionValue) {
-      this.arrInputValue = '';
-      const infoInput = {
-        id: id,
-        concatenationValue: concatenationValue,
-        conditionValue: conditionValue
-      }
-      this.arrInputValue = JSON.stringify(infoInput);
+    if (option) {
+      this.arrInputValue = JSON.stringify(option);
+      console.log(`Arr Input Value: ${this.arrInputValue}`);
     }
   }
 
