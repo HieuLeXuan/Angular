@@ -1,0 +1,37 @@
+[
+    {
+      "index": 0,
+      "name": "First Name",
+      "concatenationValue": "",
+      "conditionValue": "",
+      "type": "string"
+    },
+    {
+      "index": 1,
+      "name": "Age",
+      "concatenationValue": "",
+      "conditionValue": "",
+      "type": "number"
+    },
+    {
+      "index": 2,
+      "name": "Date",
+      "concatenationValue": "",
+      "conditionValue": "",
+      "type": "date"
+    },
+    {
+      "index": 3,
+      "name": "Education",
+      "concatenationValue": "",
+      "conditionValue": "",
+      "type": "enum"
+    },
+    {
+      "index": 4,
+      "name": "Hazadous duties",
+      "concatenationValue": "",
+      "conditionValue": "",
+      "type": "boolean"
+    }
+  ]

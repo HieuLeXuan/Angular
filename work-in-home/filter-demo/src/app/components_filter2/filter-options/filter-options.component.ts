@@ -1,3 +1,5 @@
+import { HttpClient } from '@angular/common/http';
+import { Option } from './../../components_filter2/class/option';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -9,53 +11,27 @@ export class FilterOptionsComponent implements OnInit {
   @Output() isOpenFilterOption = new EventEmitter();
   @Output() sendDataOption = new EventEmitter();
 
-  options = [
-    {
-      id: 1,
-      name: 'First Name',
-      concatenationValue: '',
-      conditionValue: '',
-      type: 'string'
-    },
-    {
-      id: 2,
-      name: 'Age',
-      concatenationValue: '',
-      conditionValue: '',
-      type: 'number'
-    },
-    {
-      id: 3,
-      name: 'Date',
-      concatenationValue: '',
-      conditionValue: '',
-      type: 'date'
-    },
-    {
-      id: 4,
-      name: 'Education',
-      concatenationValue: '',
-      conditionValue: '',
-      type: 'enum'
-    },
-    {
-      id: 5,
-      name: 'Hazadous duties',
-      concatenationValue: '',
-      conditionValue: '',
-      type: 'boolean'
-    }
-  ]
+  options: Option[] = [];
+  searchOption = '';
 
-  constructor() { }
+  constructor(
+    private httpClient: HttpClient,
+  ) { }
 
   ngOnInit(): void {
+    this.httpClient.get("assets/data/options.json").subscribe(data => {
+      this.options = JSON.parse(JSON.stringify(data));
+      console.log(this.options);
+    });
   }
 
-  addOption(id: number) {
-    const option = this.options.find((element) => element.id === id);
+  searchOptionLocal(event: any) {
+    
+  }
+
+  addOption(index: string) {
+    const option = this.options.find((element) => element.index === index);
     this.isOpenFilterOption.emit(true);
     this.sendDataOption.emit(option);
   }
-
 }

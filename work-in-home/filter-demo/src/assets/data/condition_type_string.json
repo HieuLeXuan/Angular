@@ -1,0 +1,22 @@
+[
+    {
+      "id": 1,
+      "concatenationValue": "is"
+    },
+    {
+      "id": 2,
+      "concatenationValue": "is not"
+    },
+    {
+      "id": 3,
+      "concatenationValue": "contains"
+    },
+    {
+      "id": 4,
+      "concatenationValue": "is unknown"
+    },
+    {
+      "id": 5,
+      "concatenationValue": "has any value"
+    }
+]

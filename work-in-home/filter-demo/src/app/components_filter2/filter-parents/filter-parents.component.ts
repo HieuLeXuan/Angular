@@ -24,14 +24,12 @@ export class FilterParentsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // add conditionValue into last object
     this.sendDataOrtherService.reciveData().subscribe((data) => {
       if (data) {
         const dataTemp = JSON.parse(data);
-        const lastIndex = this.listOptions.findIndex(x => x.conditionValue === dataTemp.conditionValue);
-        this.listOptions[lastIndex].conditionValue = dataTemp.conditionValue;
+        this.listOptions[dataTemp.index].conditionValue = dataTemp.conditionValue;
 
-        if (this.listOptions[lastIndex].conditionValue === '') {
+        if (this.listOptions[dataTemp.index].conditionValue === '') {
           this.isDisableAddFilter = true;
         } else {
           this.isDisableAddFilter = false;
@@ -63,8 +61,12 @@ export class FilterParentsComponent implements OnInit {
     event.concatenationValue = 'is';
     this.listOptions.push(event);
 
+    const lastIndex = this.listOptions.findIndex(x => x.index === event.index);
+    event.index = lastIndex.toString();
     this.currentOption = event;
+
     this.openFilterCondition(event);
+    console.log(`Option in parent1: ${JSON.stringify(this.currentOption)}`);
   }
 
   deleteOption(conditionValue: string) {
@@ -89,9 +91,10 @@ export class FilterParentsComponent implements OnInit {
   }
 
   openFilterCondition(option: Option) {
+    console.log(`Option when click open option: ${JSON.stringify(option)}`);
+
     this.arrInputValue = '';
     this.indexCurrentOption = this.listOptions.findIndex(x => x.conditionValue === option.conditionValue);
-
     if (this.isOpenFilterCondition === true) {
       this.isOpenFilterCondition = false;
       setTimeout(() => {
@@ -102,9 +105,10 @@ export class FilterParentsComponent implements OnInit {
     }
 
     if (option) {
+      option.index = this.indexCurrentOption.toString();
       this.arrInputValue = JSON.stringify(option);
-      console.log(`Arr Input Value: ${this.arrInputValue}`);
     }
+    console.log(`Option in parent2: ${this.arrInputValue}`);
   }
 
 }

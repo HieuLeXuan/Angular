@@ -1,6 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { SendDataOrtherComponentService } from 'src/app/service/send-data-orther-component.service';
 import { Option } from '../class/option';
+import { HttpClient } from '@angular/common/http';
+import { Concatenations } from '../class/Concatenation';
+import { async } from '@angular/core/testing';
 
 @Component({
   selector: 'app-filter-condition',
@@ -12,41 +15,24 @@ export class FilterConditionComponent implements OnInit {
   @Output() closePopupCondition = new EventEmitter();
   @Input() arrInputValue = '';
   @Input() isDeleteOption = false;
-
-  // restructure fuilter
   @Input() optionCurrent!: Option;
-  // get type from options parents
   typeOption = '';
-
-  idConcatenation!: number;
+  idConcatenation = '';
   conditionValue = '';
+  concatenations: Concatenations[] = [];
 
-  concatenations = [
-    {
-      id: 1,
-      concatenationValue: 'is',
-    },
-    {
-      id: 2,
-      concatenationValue: 'is not',
-    },
-    {
-      id: 3,
-      concatenationValue: 'contains',
-    },
-    {
-      id: 4,
-      concatenationValue: 'is unknown',
-    },
-    {
-      id: 5,
-      concatenationValue: 'has any value',
-    },
-  ];
+  constructor(
+    private sendDataOrtherService: SendDataOrtherComponentService,
+    private httpClient: HttpClient,
+  ) {}
 
-  constructor(private sendDataOrtherService: SendDataOrtherComponentService) {}
+  async ngOnInit(): Promise<void> {
+    const data = await this.httpClient.get("assets/data/condition_type_string.json").toPromise();
+    this.concatenations = JSON.parse(JSON.stringify(data));
 
-  ngOnInit(): void {
+    console.log(`Array value: ${(this.arrInputValue)}`);
+    this.optionCurrent = JSON.parse(this.arrInputValue);
+
     if (this.optionCurrent.type === 'string') {
       this.typeOption = this.optionCurrent.type;
     }
@@ -62,11 +48,13 @@ export class FilterConditionComponent implements OnInit {
       // tslint:disable-next-line:no-non-null-assertion
       this.idConcatenation = concatenation?.id!;
     } else {
-      this.idConcatenation = 1;
+      this.idConcatenation = '1';
     }
+
+    console.log(`Option in condition1: ${JSON.stringify(this.optionCurrent)}`);
   }
 
-  displayInputCondition(idConcatenation: number) {
+  displayInputCondition(idConcatenation: string) {
     const concatenation = this.concatenations.find( element => element.id === idConcatenation );
 
     const concatenationOption = {
@@ -79,8 +67,14 @@ export class FilterConditionComponent implements OnInit {
   }
 
   sendAdition(conditionValue: string) {
+    if (this.arrInputValue) {
+      this.optionCurrent = JSON.parse(this.arrInputValue);
+      // this.optionCurrent.index = JSON.parse(this.arrInputValue).index;  
+    }
     this.optionCurrent.conditionValue = conditionValue;
     this.sendDataOrtherService.sendData(JSON.stringify(this.optionCurrent));
+
+    console.log(`Option in condition2: ${JSON.stringify(this.optionCurrent)}`);
   }
 
   closePopup() {

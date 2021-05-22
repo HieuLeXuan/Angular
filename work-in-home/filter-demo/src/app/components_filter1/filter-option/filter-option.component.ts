@@ -16,7 +16,6 @@ export class FilterOptionComponent implements OnInit {
 
   addOption() {
     this.optionFilter.emit('Name');
-    console.log(this.optionFilter);
   }
 
 }

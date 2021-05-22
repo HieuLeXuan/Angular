@@ -1,3 +1,4 @@
+import { SearchComponent } from './component_search/search/search.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FilterComponent } from './components_filter1/filter/filter.component';
@@ -7,6 +8,8 @@ const routes: Routes = [
   {path: '', component: FilterParentsComponent},
   {path: 'filter1', component: FilterComponent},
   {path: 'filter2', component: FilterParentsComponent},
+  {path: 'search', component: SearchComponent},
+
 ];
 
 @NgModule({
