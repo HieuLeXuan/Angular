@@ -27,24 +27,22 @@ export class FilterConditionComponent implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    const data = await this.httpClient.get("assets/data/condition_type_string.json").toPromise();
+    if (this.arrInputValue) {
+      this.optionCurrent = JSON.parse(this.arrInputValue);
+    }
+    this.typeOption = this.optionCurrent.type;
+    const data = await this.httpClient.get("assets/data/condition_type_" + this.optionCurrent.type + ".json").toPromise();
     this.concatenations = JSON.parse(JSON.stringify(data));
 
     console.log(`Array value: ${(this.arrInputValue)}`);
-    this.optionCurrent = JSON.parse(this.arrInputValue);
+    // this.optionCurrent = JSON.parse(this.arrInputValue);
 
-    if (this.optionCurrent.type === 'string') {
-      this.typeOption = this.optionCurrent.type;
-    }
+    console.log(`Type: ${(this.optionCurrent).type}`);
 
     this.conditionValue = '';
     if (this.arrInputValue) {
       this.conditionValue = JSON.parse(this.arrInputValue).conditionValue;
-      const concatenation = this.concatenations.find(
-        (element: any) =>
-          element.concatenationValue ===
-          JSON.parse(this.arrInputValue).concatenationValue
-      );
+      const concatenation = this.concatenations.find((element: any) => element.id === 1);
       // tslint:disable-next-line:no-non-null-assertion
       this.idConcatenation = concatenation?.id!;
     } else {
@@ -68,9 +66,10 @@ export class FilterConditionComponent implements OnInit {
 
   sendAdition(conditionValue: string) {
     if (this.arrInputValue) {
-      this.optionCurrent = JSON.parse(this.arrInputValue);
-      // this.optionCurrent.index = JSON.parse(this.arrInputValue).index;  
+      this.optionCurrent = JSON.parse(this.arrInputValue);  
     }
+    // const concatenation = this.concatenations.find((element: any) => element.id === 1);
+    // this.optionCurrent.concatenationValue = JSON.parse(JSON.stringify(concatenation)).concatenationValue;
     this.optionCurrent.conditionValue = conditionValue;
     this.sendDataOrtherService.sendData(JSON.stringify(this.optionCurrent));
 

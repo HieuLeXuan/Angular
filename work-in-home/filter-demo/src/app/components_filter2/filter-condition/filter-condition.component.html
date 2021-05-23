@@ -15,5 +15,97 @@
           (keyup.enter)="closePopup()" />
       </div>
     </label>
+    <div class="w-full my-6 flex items-center justify-items-center" (click)="closePopup()">
+      <span class="px-24">Done</span>
+    </div>  
+  </div>
+</div>
+<div *ngIf="typeOption === 'number'">
+  <div class="absolute z-10 bg-white border border-gray-200 rounded-md -space-y-px w-64 mt-5">
+    <label class="flex ounded-tl-md rounded-tr-md relative cursor-pointer md:pl-4 md:pr-4 md:grid md:grid-cols-1"
+      *ngFor="let concatenation of concatenations">
+      <div class="flex items-center text-sm mt-2">
+        <input (click)="displayInputCondition(concatenation.id)" [checked]="concatenation.id == idConcatenation"
+          type="radio" name="pricing_plan" value="Startup"
+          class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" aria-labelledby="pricing-plans-0-label"
+          aria-describedby="pricing-plans-0-description-0 pricing-plans-0-description-1">
+        <span id="pricing-plans-0-label"
+          class="ml-3 font-medium text-gray-900">{{concatenation.concatenationValue}}</span>
+      </div>  
+      <div class="mt-2 border border-black rounded" *ngIf="concatenation.id == idConcatenation">
+        <input type="text" class="w-full" value="{{conditionValue}}" (keyup)="sendAdition(aditionValue.value)" #aditionValue
+          (keyup.enter)="closePopup()" />
+      </div>
+    </label>
+    <div class="w-full my-6 flex items-center justify-items-center" (click)="closePopup()">
+      <span class="px-24">Done</span>
+    </div>  
+  </div>
+</div>
+<div *ngIf="typeOption === 'date'">
+  <div class="absolute z-10 bg-white border border-gray-200 rounded-md -space-y-px w-96 mt-5">
+    <label class="flex ounded-tl-md rounded-tr-md relative cursor-pointer md:pl-4 md:pr-4 md:grid md:grid-cols-1"
+      *ngFor="let concatenation of concatenations">
+      <div class="flex items-center text-sm mt-2">
+        <input (click)="displayInputCondition(concatenation.id)" [checked]="concatenation.id == idConcatenation"
+          type="radio" name="pricing_plan" value="Startup"
+          class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" aria-labelledby="pricing-plans-0-label"
+          aria-describedby="pricing-plans-0-description-0 pricing-plans-0-description-1">
+        <span id="pricing-plans-0-label"
+          class="ml-3 font-medium text-gray-900">{{concatenation.concatenationValue}}</span>
+      </div>
+      <div class="mt-2 rounded" *ngIf="concatenation.id == idConcatenation">
+        <app-date-picker-one></app-date-picker-one>
+      </div>
+    </label>
+    <div class="w-full my-3 flex items-center justify-items-center" (click)="closePopup()">
+      <span class="px-40 py-3">Done</span>
+    </div>  
+  </div>
+</div>
+<div *ngIf="typeOption === 'enum'">
+  <div class="absolute z-10 bg-white border border-gray-200 rounded-md -space-y-px w-64 mt-5">
+    <div class="mx-auto py-2 px-4 justify-center">
+      <div class="items-start">
+          <div class="py-4 flex items-center" *ngFor="let concatenation of concatenations">
+              <div class="bg-white dark:bg-gray-800 border rounded-sm border-gray-400 dark:border-gray-700 w-4 h-4 flex flex-shrink-0 justify-center items-center relative">
+                  <input type="checkbox" class="checkbox opacity-0 absolute cursor-pointer w-full h-full" />
+                  <div class="check-icon hidden bg-blue-700 text-white rounded-sm">
+                      <svg class="icon icon-tabler icon-tabler-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" />
+                          <path d="M5 12l5 5l10 -10" />
+                      </svg>
+                  </div>
+              </div>
+              <p class="ml-3 text-sm leading-4 font-normal text-gray-800 dark:text-gray-100">{{ concatenation.concatenationValue }}</p>
+          </div>
+          <style>
+              .checkbox:checked + .check-icon {
+                  display: flex;
+              }
+          </style>
+      </div>
+      <div class="w-full my-2 flex items-center justify-items-center" (click)="closePopup()">
+        <span class="px-20">Done</span>
+      </div>  
+  </div>
+  </div>
+</div>
+<div *ngIf="typeOption === 'boolean'">
+  <div class="absolute z-10 bg-white border border-gray-200 rounded-md -space-y-px w-32 mt-5">
+    <label class="flex ounded-tl-md rounded-tr-md relative cursor-pointer md:pl-2 md:pr-2 md:grid md:grid-cols-1"
+      *ngFor="let concatenation of concatenations">
+      <div class="flex items-center text-sm mx-2 my-2">
+        <input (click)="displayInputCondition(concatenation.id)" [checked]="concatenation.id == idConcatenation"
+          type="radio" name="pricing_plan" value="Startup"
+          class="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500" aria-labelledby="pricing-plans-0-label"
+          aria-describedby="pricing-plans-0-description-0 pricing-plans-0-description-1">
+        <span id="pricing-plans-0-label"
+          class="ml-3 font-medium text-gray-900">{{concatenation.concatenationValue}}</span>
+      </div>
+    </label>
+    <div class="w-full my-6 flex items-center justify-items-center" (click)="closePopup()">
+      <span class="px-10">Done</span>
+    </div>
   </div>
 </div>

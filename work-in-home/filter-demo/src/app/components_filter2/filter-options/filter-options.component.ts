@@ -12,7 +12,7 @@ export class FilterOptionsComponent implements OnInit {
   @Output() sendDataOption = new EventEmitter();
 
   options: Option[] = [];
-  searchOption = '';
+  textSearch = '';
 
   constructor(
     private httpClient: HttpClient,
@@ -33,5 +33,15 @@ export class FilterOptionsComponent implements OnInit {
     const option = this.options.find((element) => element.index === index);
     this.isOpenFilterOption.emit(true);
     this.sendDataOption.emit(option);
+  }
+
+  searchLocalOption() {
+    if (this.textSearch != '') {
+      this.options = this.options.filter(res => {
+        return res.name.toLocaleLowerCase().match(this.textSearch.toLocaleLowerCase());
+      });
+    } else {
+      this.ngOnInit();
+    }
   }
 }

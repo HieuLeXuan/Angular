@@ -1,0 +1,18 @@
+[
+    {
+      "id": 1,
+      "concatenationValue": "hight school"
+    },
+    {
+      "id": 2,
+      "concatenationValue": "under grad"
+    },
+    {
+      "id": 3,
+      "concatenationValue": "post grad"
+    },
+    {
+      "id": 4,
+      "concatenationValue": "other"
+    }
+]

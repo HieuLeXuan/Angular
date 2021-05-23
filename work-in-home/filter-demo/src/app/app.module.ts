@@ -13,6 +13,7 @@ import { FilterParentsComponent } from './components_filter2/filter-parents/filt
 import { FilterOptionsComponent } from './components_filter2/filter-options/filter-options.component';
 import { FilterConditionComponent } from './components_filter2/filter-condition/filter-condition.component';
 import { SearchComponent } from './component_search/search/search.component';
+import { DatePickerOneComponent } from './components_filter2/filter-condition/date-picker-one/date-picker-one.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { SearchComponent } from './component_search/search/search.component';
     FilterOptionsComponent,
     FilterConditionComponent,
     SearchComponent,
+    DatePickerOneComponent,
   ],
   imports: [
     BrowserModule,

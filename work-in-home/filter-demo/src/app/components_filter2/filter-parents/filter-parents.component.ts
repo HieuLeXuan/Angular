@@ -58,7 +58,7 @@ export class FilterParentsComponent implements OnInit {
   getDataOption(event: Option) {
     this.isOpenFilterMenu = false;
     this.isOpenFilterCondition = true;
-    event.concatenationValue = 'is';
+    // event.concatenationValue = '';
     this.listOptions.push(event);
 
     const lastIndex = this.listOptions.findIndex(x => x.index === event.index);

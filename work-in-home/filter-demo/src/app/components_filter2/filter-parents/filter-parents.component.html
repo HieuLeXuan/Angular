@@ -3,14 +3,14 @@
     <div class="flex relative mr-2 break-normal break-all" (mouseenter)="isDisplayButtonDelete = true"
       (mouseleave)="isDisplayButtonDelete = false">
       <div>
-        <span class="h-6 bg-gray-300 hover:bg-gray-400 text-gray-500 pl-2 rounded inline-flex items-center"
+        <span class="h-8 bg-gray-300 hover:bg-gray-400 text-gray-500 pl-2 rounded inline-flex items-center"
           (click)="openFilterCondition(option)">
           <!-- <img class="fill-current w-4 h-4 mr-2" [src]="option.icon" alt=""> -->
-          <span class="relative max-w-xs truncate">{{option.name}} {{option.concatenationValue}}
-            {{option.conditionValue}}
+          <span class="relative max-w-xs truncate px-4 py-1 h-8">
+            {{option.name}} {{option.concatenationValue}} {{option.conditionValue}}
             <span class="bg-gray-300 hover:bg-gray-400 text-gray-800 rounded cursor-pointer absolute right-0 z-20"
               (click)="deleteOption(option.conditionValue)" *ngIf="isDisplayButtonDelete == true">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 my-1 mx-1" fill="none" viewBox="0 0 24 24"
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 my-2 mx-2" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -24,8 +24,8 @@
           [optionCurrent]="currentOption" [arrInputValue]="arrInputValue">
         </app-filter-condition>
       </div>
-      <span class="h-6 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 my-1 mx-1" fill="none" viewBox="0 0 24 24"
+      <span class="h-8 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 my-2 mx-2" fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
         </svg>
