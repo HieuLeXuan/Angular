@@ -1,3 +1,4 @@
+import { ClickoutsideComponent } from './click_ouside/clickoutside/clickoutside.component';
 import { SearchComponent } from './component_search/search/search.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -9,6 +10,7 @@ const routes: Routes = [
   {path: 'filter1', component: FilterComponent},
   {path: 'filter2', component: FilterParentsComponent},
   {path: 'search', component: SearchComponent},
+  {path: 'click-out', component: ClickoutsideComponent},
 
 ];
 

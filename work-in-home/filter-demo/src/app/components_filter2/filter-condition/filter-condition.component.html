@@ -1,5 +1,5 @@
 <div *ngIf="typeOption === 'string'">
-  <div class="absolute z-10 bg-white border border-gray-200 rounded-md -space-y-px w-64 mt-5">
+  <div class="absolute z-10 bg-white border border-gray-200 rounded-md -space-y-px w-64 mt-5" >
     <label class="flex ounded-tl-md rounded-tr-md relative cursor-pointer md:pl-4 md:pr-4 md:grid md:grid-cols-1"
       *ngFor="let concatenation of concatenations">
       <div class="flex items-center text-sm mt-2">
@@ -15,7 +15,7 @@
           (keyup.enter)="closePopup()" />
       </div>
     </label>
-    <div class="w-full my-6 flex items-center justify-items-center" (click)="closePopup()">
+    <div class="w-full my-6 flex items-center justify-items-center" (click)="completeProcess()">
       <span class="px-24">Done</span>
     </div>  
   </div>

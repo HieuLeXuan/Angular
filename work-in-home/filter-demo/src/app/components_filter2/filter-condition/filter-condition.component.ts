@@ -79,4 +79,12 @@ export class FilterConditionComponent implements OnInit {
   closePopup() {
     this.closePopupCondition.emit(true);
   }
+
+  completeProcess() {
+    if (this.optionCurrent.conditionValue == '') {
+      this.sendDataOrtherService.sendData(JSON.stringify(this.optionCurrent));
+    }
+    this.closePopupCondition.emit(true);
+    console.log(`Option in condition2: ${JSON.stringify(this.optionCurrent)}`);
+  }
 }

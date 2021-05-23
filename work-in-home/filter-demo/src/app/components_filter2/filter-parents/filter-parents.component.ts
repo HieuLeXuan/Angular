@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { Option } from '../class/option';
 import { SendDataOrtherComponentService } from 'src/app/service/send-data-orther-component.service';
 
@@ -18,6 +18,19 @@ export class FilterParentsComponent implements OnInit {
   arrInputValue = '';
   isDisableAddFilter = false;
   indexCurrentOption!: number;
+  isOpenOption = false;
+
+  // @ViewChild('filterCondition') filterCondition!: ElementRef;
+  // @ViewChild('filterCondition2') filterCondition2!: ElementRef; 
+  @ViewChild('filterMenu') filterMenu!: ElementRef;
+
+  @HostListener('document:click', ['$event'])
+  clickout(event: any) {
+    if (this.filterMenu && !this.filterMenu.nativeElement.contains(event.target)) {
+      this.isOpenFilterMenu = false;
+      this.isOpenFilterOption = false;
+    }
+  }
 
   constructor(
     private sendDataOrtherService: SendDataOrtherComponentService
@@ -43,6 +56,7 @@ export class FilterParentsComponent implements OnInit {
     if (!isDisableAddFilter) {
       this.isOpenFilterMenu = !this.isOpenFilterMenu;
     }
+    this.isOpenFilterCondition = false;
   }
 
   openFilterOption() {
@@ -91,7 +105,9 @@ export class FilterParentsComponent implements OnInit {
   }
 
   openFilterCondition(option: Option) {
-    console.log(`Option when click open option: ${JSON.stringify(option)}`);
+    // console.log(`Option when click open option: ${JSON.stringify(option)}`);
+    // console.log(`isOpenFilterCondition: ${this.isOpenFilterCondition}`);
+    // console.log(`Option when click open option: ${JSON.stringify(option)}`);
 
     this.arrInputValue = '';
     this.indexCurrentOption = this.listOptions.findIndex(x => x.conditionValue === option.conditionValue);
@@ -103,12 +119,16 @@ export class FilterParentsComponent implements OnInit {
     } else {
       this.isOpenFilterCondition = true;
     }
+    console.log(`isOpenFilterCondition: ${this.isOpenFilterCondition}`);
 
     if (option) {
       option.index = this.indexCurrentOption.toString();
       this.arrInputValue = JSON.stringify(option);
     }
-    console.log(`Option in parent2: ${this.arrInputValue}`);
+    // console.log(`Option in parent2: ${this.arrInputValue}`);
   }
 
+  openOption() {
+    this.isOpenOption = !this.isOpenOption;
+  }
 }

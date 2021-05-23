@@ -14,6 +14,7 @@ import { FilterOptionsComponent } from './components_filter2/filter-options/filt
 import { FilterConditionComponent } from './components_filter2/filter-condition/filter-condition.component';
 import { SearchComponent } from './component_search/search/search.component';
 import { DatePickerOneComponent } from './components_filter2/filter-condition/date-picker-one/date-picker-one.component';
+import { ClickoutsideComponent } from './click_ouside/clickoutside/clickoutside.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { DatePickerOneComponent } from './components_filter2/filter-condition/da
     FilterConditionComponent,
     SearchComponent,
     DatePickerOneComponent,
+    ClickoutsideComponent,
   ],
   imports: [
     BrowserModule,

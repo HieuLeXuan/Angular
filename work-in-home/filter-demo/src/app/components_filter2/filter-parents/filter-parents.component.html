@@ -4,11 +4,11 @@
       (mouseleave)="isDisplayButtonDelete = false">
       <div>
         <span class="h-8 bg-gray-300 hover:bg-gray-400 text-gray-500 pl-2 rounded inline-flex items-center"
-          (click)="openFilterCondition(option)">
+          (click)="openFilterCondition(option)" #filterCondition2>
           <!-- <img class="fill-current w-4 h-4 mr-2" [src]="option.icon" alt=""> -->
           <span class="relative max-w-xs truncate px-4 py-1 h-8">
             {{option.name}} {{option.concatenationValue}} {{option.conditionValue}}
-            <span class="bg-gray-300 hover:bg-gray-400 text-gray-800 rounded cursor-pointer absolute right-0 z-20"
+            <span class="bg-gray-300 hover:bg-gray-400 text-gray-800 rounded cursor-pointer absolute right-0 z-20 -mt-2"
               (click)="deleteOption(option.conditionValue)" *ngIf="isDisplayButtonDelete == true">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 my-2 mx-2" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
@@ -19,10 +19,12 @@
           </span>
         </span>
 
-        <app-filter-condition *ngIf="isOpenFilterCondition && listOptions.indexOf(option) == indexCurrentOption"
-          (isDisplayInputCondition)="getConcatenationValue($event)" (closePopupCondition)="closePopupCondition($event)"
-          [optionCurrent]="currentOption" [arrInputValue]="arrInputValue">
-        </app-filter-condition>
+        <div #filterCondition *ngIf="isOpenFilterCondition && listOptions.indexOf(option) == indexCurrentOption">
+          <app-filter-condition
+            (isDisplayInputCondition)="getConcatenationValue($event)" (closePopupCondition)="closePopupCondition($event)"
+            [optionCurrent]="currentOption" [arrInputValue]="arrInputValue">
+          </app-filter-condition>
+        </div>
       </div>
       <span class="h-8 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 my-2 mx-2" fill="none" viewBox="0 0 24 24"
@@ -33,14 +35,17 @@
     </div>
 
     <div *ngIf="listOptions.indexOf(option) != listOptions.length - 1">
-      <select class="outline-none mx-1">
-        <option>and</option>
-        <option>or</option>
-      </select>
+      <div class="mx-2" (click)="openOption()">
+        and
+      </div>
+      <div class="absolute z-10 bg-white border border-gray-200 rounded-md -space-y-px w-32 mt-5 pl-2" style="display: grid;" *ngIf="isOpenOption">
+        <span>and</span>
+        <span>or</span>
+      </div>
     </div>
   </div>
 
-  <div class="flex font-medium text-blue-400" [ngClass]="{'cursor-default': isDisableAddFilter, 'cursor-pointer': !isDisableAddFilter}">
+  <div class="flex font-medium text-blue-400" [ngClass]="{'cursor-default': isDisableAddFilter, 'cursor-pointer': !isDisableAddFilter}" #filterMenu>
     <div class="flex pr-4" (click)="openFilterMenu(isDisableAddFilter)">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" [ngClass]="{'text-gray-400': isDisableAddFilter}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
