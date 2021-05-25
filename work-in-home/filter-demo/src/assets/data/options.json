@@ -1,35 +1,35 @@
 [
     {
-      "index": 0,
       "name": "First Name",
+      "filterMenuName": "",
       "concatenationValue": "",
       "conditionValue": "",
       "type": "string"
     },
     {
-      "index": 1,
       "name": "Age",
+      "filterMenuName": "",
       "concatenationValue": "",
       "conditionValue": "",
       "type": "number"
     },
     {
-      "index": 2,
       "name": "Date",
+      "filterMenuName": "",
       "concatenationValue": "",
       "conditionValue": "",
       "type": "date"
     },
     {
-      "index": 3,
       "name": "Education",
+      "filterMenuName": "",
       "concatenationValue": "",
       "conditionValue": "",
       "type": "enum"
     },
     {
-      "index": 4,
       "name": "Hazadous duties",
+      "filterMenuName": "",
       "concatenationValue": "",
       "conditionValue": "",
       "type": "boolean"

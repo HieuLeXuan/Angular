@@ -34,7 +34,7 @@ import { ClickoutsideComponent } from './click_ouside/clickoutside/clickoutside.
     AppRoutingModule,
     FormsModule,
     NgSelectModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { Option } from '../class/option';
+import { Option, GroupOption } from '../class/option';
 import { SendDataOrtherComponentService } from 'src/app/service/send-data-orther-component.service';
 
 @Component({
@@ -12,40 +12,49 @@ export class FilterParentsComponent implements OnInit {
   isOpenFilterMenu = false;
   isOpenFilterOption = false;
   isOpenFilterCondition = false;
-  listOptions: Option[] = [];
   isDisplayButtonDelete = false;
-  currentOption!: Option;
-  arrInputValue = '';
   isDisableAddFilter = false;
-  indexCurrentOption!: number;
+
   isOpenOption = false;
 
-  // @ViewChild('filterCondition') filterCondition!: ElementRef;
-  // @ViewChild('filterCondition2') filterCondition2!: ElementRef; 
-  @ViewChild('filterMenu') filterMenu!: ElementRef;
+  listGroupOptions: GroupOption[] = [];
+  currentGroupOption!: GroupOption;
+  filterMenuName = '';
+  indexOptionCurrent!: number;
 
-  @HostListener('document:click', ['$event'])
-  clickout(event: any) {
-    if (this.filterMenu && !this.filterMenu.nativeElement.contains(event.target)) {
-      this.isOpenFilterMenu = false;
-      this.isOpenFilterOption = false;
-    }
-  }
+  // @ViewChild('filterMenu') filterMenu!: ElementRef;
+
+  // @HostListener('document:click', ['$event'])
+  // clickout(event: any) {
+  //   if (this.filterMenu && !this.filterMenu.nativeElement.contains(event.target)) {
+  //     this.isOpenFilterMenu = false;
+  //     this.isOpenFilterOption = false;
+  //   }
+  // }
 
   constructor(
     private sendDataOrtherService: SendDataOrtherComponentService
   ) {}
 
   ngOnInit(): void {
-    this.sendDataOrtherService.reciveData().subscribe((data) => {
+    //filter
+    this.sendDataOrtherService.reciveData().subscribe((data) => {      
       if (data) {
-        const dataTemp = JSON.parse(data);
-        this.listOptions[dataTemp.index].conditionValue = dataTemp.conditionValue;
+        const dataTemp = JSON.parse(JSON.stringify(data));
+        console.log(`current group option: ${dataTemp}`);
 
-        if (this.listOptions[dataTemp.index].conditionValue === '') {
-          this.isDisableAddFilter = true;
-        } else {
-          this.isDisableAddFilter = false;
+        const indexOption = Number(localStorage.getItem('index of option current'));
+        const indexGroupOption = Number(localStorage.getItem('index of group option current'));
+
+        if (indexOption && indexGroupOption) {
+          let conditionValue = this.listGroupOptions[indexGroupOption].options[indexOption].conditionValue
+          conditionValue = dataTemp.conditionValue;
+
+          if (conditionValue === '') {
+            this.isDisableAddFilter = true;
+          } else {
+            this.isDisableAddFilter = false;
+          }
         }
       }
     });
@@ -53,64 +62,67 @@ export class FilterParentsComponent implements OnInit {
 
   // filter
   openFilterMenu(isDisableAddFilter: boolean) {
+    this.isOpenFilterCondition = false;
     if (!isDisableAddFilter) {
       this.isOpenFilterMenu = !this.isOpenFilterMenu;
     }
-    this.isOpenFilterCondition = false;
   }
 
-  openFilterOption() {
+  openFilterOption(filterMenuName: string) {
+    this.filterMenuName = filterMenuName;
     this.isOpenFilterOption = !this.isOpenFilterOption;
   }
 
-  getValuable(event: boolean) {
-    if (event) {
-      this.isOpenFilterOption = false;
-    }
+  // and/ or
+  openOption() {
+    this.isOpenOption = !this.isOpenOption;
   }
 
-  getDataOption(event: Option) {
+  getDataOption(event: GroupOption) {
     this.isOpenFilterMenu = false;
+    this.isOpenFilterOption = false;
     this.isOpenFilterCondition = true;
-    // event.concatenationValue = '';
-    this.listOptions.push(event);
+    if (this.isOpenFilterCondition == true) {
+      this.isDisableAddFilter = true;
+    }
+    
+    this.listGroupOptions.push(event);
+    event.options[this.indexOptionCurrent].filterMenuName = this.filterMenuName;
+    console.log(this.listGroupOptions);
+    this.currentGroupOption = event;
 
-    const lastIndex = this.listOptions.findIndex(x => x.index === event.index);
-    event.index = lastIndex.toString();
-    this.currentOption = event;
-
-    this.openFilterCondition(event);
-    console.log(`Option in parent1: ${JSON.stringify(this.currentOption)}`);
+    localStorage.setItem('index of option current', this.indexOptionCurrent.toString());
+    localStorage.setItem('index of group option current', (this.listGroupOptions.length - 1).toString());
   }
 
-  deleteOption(conditionValue: string) {
+  getIndexOptionCurrent(event: number) {
+    this.indexOptionCurrent = event;
+    console.log(`index option current: ${event}`);
+  }
+
+  deleteOption(index: number) {
+    this.isDisplayButtonDelete = false;
     this.isDisableAddFilter = false;
     this.isOpenFilterCondition = false;
-    const indexCurrentOption = this.listOptions.findIndex(x => x.conditionValue === conditionValue);
-
-    if (indexCurrentOption > -1) {
-      this.listOptions.splice(indexCurrentOption, 1);
+    if (this.isOpenFilterCondition == false) {
+      this.isDisableAddFilter = false;
     }
-  }
-
-  getConcatenationValue(event: Option) {
-    const optionCurrent = this.listOptions.find((element) => element.conditionValue === event.conditionValue);
-    (optionCurrent as Option).concatenationValue = event.concatenationValue;
+    this.listGroupOptions.splice(index, 1);
   }
 
   closePopupCondition(event: boolean) {
     if (event === true) {
       this.isOpenFilterCondition = false;
     }
+    if (this.isOpenFilterCondition == false) {
+      this.isDisableAddFilter = false;
+    }
   }
 
-  openFilterCondition(option: Option) {
-    // console.log(`Option when click open option: ${JSON.stringify(option)}`);
-    // console.log(`isOpenFilterCondition: ${this.isOpenFilterCondition}`);
-    // console.log(`Option when click open option: ${JSON.stringify(option)}`);
+  openFilterCondition(groupOption: GroupOption, index: number) {
+    localStorage.setItem('index of group option current', index.toString());
+    console.log(`array group option: ${JSON.stringify(this.listGroupOptions)}`);
 
-    this.arrInputValue = '';
-    this.indexCurrentOption = this.listOptions.findIndex(x => x.conditionValue === option.conditionValue);
     if (this.isOpenFilterCondition === true) {
       this.isOpenFilterCondition = false;
       setTimeout(() => {
@@ -119,16 +131,10 @@ export class FilterParentsComponent implements OnInit {
     } else {
       this.isOpenFilterCondition = true;
     }
-    console.log(`isOpenFilterCondition: ${this.isOpenFilterCondition}`);
-
-    if (option) {
-      option.index = this.indexCurrentOption.toString();
-      this.arrInputValue = JSON.stringify(option);
-    }
-    // console.log(`Option in parent2: ${this.arrInputValue}`);
+    this.currentGroupOption = groupOption;
   }
 
-  openOption() {
-    this.isOpenOption = !this.isOpenOption;
+  get indexGroupOption() {
+    return Number(localStorage.getItem('index of group option current'));
   }
 }
